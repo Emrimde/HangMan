@@ -2,18 +2,23 @@ package HangManClient;
 
 import java.awt.*;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import javax.swing.*;
 
-public class HangMan extends JFrame {
+public class HangMan extends JFrame implements ActionListener{
+    
+    private JButton startButton;
+    public static Font mvBoli = new Font("MV Boli", Font.BOLD,35); ;
     
     public HangMan() {
         ImageIcon cloud1 = new ImageIcon("cloud1.png");
-        Font mvBoli = new Font("MV Boli", Font.BOLD,35); 
-        JButton startButton = new JButton("Start");
+        startButton = new JButton("Start");
+        startButton.addActionListener(this);
         JPanel subPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         JPanel upperPanel = new JPanel();
@@ -23,6 +28,7 @@ public class HangMan extends JFrame {
         startButton.setBackground(new Color(21, 194, 82));
         startButton.setForeground(Color.yellow);
         startButton.setBorder(BorderFactory.createLineBorder(Color.yellow, 5, true));
+        
         JLabel label = new JLabel("HangMan");
         JLabel cloudLabel1 = new JLabel();
         cloudLabel1.setIcon(cloud1);
@@ -76,6 +82,14 @@ public class HangMan extends JFrame {
 
         } catch (IOException e) {
 
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == startButton){
+            dispose();
+            new SetLevelWindow();
         }
     }
 
