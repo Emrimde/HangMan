@@ -1,5 +1,5 @@
 
-package hangman;
+package HangManClient;
 
 
 public class HangMan {
