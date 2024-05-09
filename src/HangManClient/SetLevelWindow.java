@@ -70,18 +70,22 @@ public class SetLevelWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == easyButton) {
             System.out.println("Time set to 2 minutes");
+            new Game("easy");
             dispose();
+            
             //There will be new window
         }
         else if (e.getSource() == mediumButton) {
             System.out.println("Time set to 1:30 minutes");
+              new Game("medium");
             dispose();
-             //There will be new window
+            
         }
         else if (e.getSource() == hardButton) {
             System.out.println("Time set to 1 minutes");
+            new Game("hard");
             dispose();
-             //There will be new window
+            
         }
     }
 
