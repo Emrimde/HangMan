@@ -16,6 +16,10 @@ public class HangMan extends JFrame implements ActionListener{
     public static Font mvBoli = new Font("MV Boli", Font.BOLD,35); ;
     
     public HangMan() {
+        
+        connectWithServer();
+        
+        
         ImageIcon cloud1 = new ImageIcon("cloud1.png");
         startButton = new JButton("Start");
         startButton.addActionListener(this);
@@ -58,10 +62,11 @@ public class HangMan extends JFrame implements ActionListener{
         setTitle("HangMan Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 500);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    public void connectWithServer() {
+    private void connectWithServer() {
         int port = 6899;
         String adress = "127.0.0.1";
         Socket socket = null;
@@ -71,6 +76,7 @@ public class HangMan extends JFrame implements ActionListener{
             socket = new Socket(adress, port);
         } catch (IOException e) {
             System.out.println("I can't connect to the server");
+            System.exit(0);
         }
 
         try {
