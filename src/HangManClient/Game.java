@@ -1,80 +1,101 @@
 package HangManClient;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
-public class Game extends JFrame {
+public class Game extends JFrame implements WindowListener {
 
     private String level;
+    
+    private PrintWriter out;
+    private BufferedReader in ;
+    private Socket socket;
 
-    public Game(String level) {
+    public Game(String level, Socket socket)   {
         this.level = level;
+        this.socket = socket;
+        try {
+            out = new PrintWriter(socket.getOutputStream(),true);
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+
+          
         JPanel upperPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
-       
+
         JPanel mainBannedPanel = new JPanel();
         JPanel bannedPanel1 = new JPanel();
         JPanel bannedPanel2 = new JPanel();
-        
+
         JLabel bannedHeader = new JLabel("Banned letters");
         JLabel bannedLetters1 = new JLabel("a,b,c,d,e,f,g,h,i,j,k");
         JLabel bannedLetters2 = new JLabel("a,b,c,d,e,f,g,h,i,j,k");
         JLabel timeLabel = new JLabel("Time 2:00");
-        
+
         JTextField letterField = new JTextField();
-        
+
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        
+
         upperPanel.setLayout(null);
         upperPanel.setPreferredSize(new Dimension(500, 300));
         upperPanel.setBackground(new Color(24, 179, 240));
-        
+
         bottomPanel.setBackground(new Color(21, 194, 82));
         bottomPanel.setPreferredSize(new Dimension(500, 200));
-        
-        mainBannedPanel.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-        mainBannedPanel.setBounds(0,0,150,200);
+
+        mainBannedPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        mainBannedPanel.setBounds(0, 0, 150, 200);
         mainBannedPanel.setBackground(new Color(24, 179, 240));
-        
-        bannedPanel1.setPreferredSize(new Dimension(200,30));
+
+        bannedPanel1.setPreferredSize(new Dimension(200, 30));
         bannedPanel1.setBackground(new Color(24, 179, 240));
-        
-        bannedPanel2.setPreferredSize(new Dimension(200,30));
+
+        bannedPanel2.setPreferredSize(new Dimension(200, 30));
         bannedPanel2.setBackground(new Color(24, 179, 240));
-        
+
         bannedHeader.setForeground(Color.yellow);
-        bannedHeader.setFont(new Font("MV Boli",Font.PLAIN,18));
+        bannedHeader.setFont(new Font("MV Boli", Font.PLAIN, 18));
         mainBannedPanel.add(bannedHeader);
-         
+
         bannedLetters1.setForeground(Color.yellow);
-        bannedLetters1.setFont(new Font(null,Font.PLAIN,15));
+        bannedLetters1.setFont(new Font(null, Font.PLAIN, 15));
         bannedPanel1.add(bannedLetters1);
-        
+
         bannedLetters2.setForeground(Color.yellow);
-        bannedLetters2.setFont(new Font(null,Font.PLAIN,15));
+        bannedLetters2.setFont(new Font(null, Font.PLAIN, 15));
         bannedPanel2.add(bannedLetters2);
-        
-        letterField.setBounds(217,100,75,50);
+
+        letterField.setBounds(217, 100, 75, 50);
         letterField.setBorder(BorderFactory.createLineBorder(Color.yellow, 5, true));
         letterField.setFont(HangMan.mvBoli);
         letterField.setForeground(Color.yellow);
         letterField.setBackground(new Color(24, 179, 240));
         letterField.setCaretColor(Color.red);
         letterField.setHorizontalAlignment(JTextField.CENTER);
-        
-        timeLabel.setBounds(400,0,100,40);
+
+        timeLabel.setBounds(400, 0, 100, 40);
         timeLabel.setForeground(Color.yellow);
-        timeLabel.setFont(new Font(null,Font.PLAIN,20));
-        
+        timeLabel.setFont(new Font(null, Font.PLAIN, 20));
+
         mainBannedPanel.add(bannedPanel1);
         mainBannedPanel.add(bannedPanel2);
-        
+
         upperPanel.add(mainBannedPanel);
         upperPanel.add(letterField);
         upperPanel.add(timeLabel);
         
-        
+        addWindowListener(this);
         add(upperPanel);
         add(bottomPanel);
 
@@ -102,23 +123,47 @@ public class Game extends JFrame {
         g2D.setColor(Color.black);
         g2D.fillOval(137, 300, 25, 25);
         g2D.drawLine(150, 325, 150, 350);
-        
         //hands
         g2D.drawLine(150, 335, 165, 325);
         g2D.drawLine(150, 335, 135, 325);
-        
         // legs
         g2D.drawLine(150, 350, 165, 375);
         g2D.drawLine(150, 350, 135, 375);
-       
-        
-        
-        
+
     }
 
-    
+    @Override
+    public void windowOpened(WindowEvent e) {
+      
+    }
 
-    
-    
-    
+    @Override
+    public void windowClosing(WindowEvent e) {
+       out.println("end");
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+     
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+   
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+     
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+      
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+       
+    }
 }
