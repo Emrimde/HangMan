@@ -21,6 +21,11 @@ public class Word {
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
     }
+
+    @Override
+    public String toString() {
+        return word;
+    }
     
     
 }
