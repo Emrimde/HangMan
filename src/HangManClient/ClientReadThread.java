@@ -7,12 +7,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 public class ClientReadThread extends Thread {
 
     BufferedReader in;
     static int lengthOfWord = 0;
     static int attempts = 0;
+    static int numberOfLettersToGuess = 10;
 
     public ClientReadThread(Socket socket) {
 
@@ -69,6 +71,20 @@ public class ClientReadThread extends Thread {
                     // Repaint the Game instance after updating attempts
                     Game.gameInstance.repaint();
                 }
+            
+            if(info.contains("LENGTH"))
+            {
+                info = info.replace("LENGTH", "");
+                 int lengthToWin = Integer.parseInt(info);
+                synchronized(ClientReadThread.class){
+                    numberOfLettersToGuess = lengthToWin;
+                }
+                System.out.println("LICZBA LITER DO ODGADNIECIA" + lengthToWin );
+                 if (numberOfLettersToGuess == 0) {
+                    SwingUtilities.invokeLater(() -> Game.gameInstance.showWinMessage());
+                }
+               
+            }
 
             }
         } catch (IOException e) {
