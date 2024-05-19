@@ -33,7 +33,7 @@ public class ClientHandler extends Thread {
 
             String info;
             String wordOfTheGame = "";
-            int lengthToWin = 0;
+            int numberOfLettersToGuess = 0;
             int attempts = 0;
             while ((info = in.readLine()) != null) {
                 if (info.equals("end")) {
@@ -56,10 +56,13 @@ public class ClientHandler extends Thread {
                     int index = randomizer.nextInt(words.size());
                     Word word = words.get(index);
                     wordOfTheGame = word.getWord();
-                    lengthToWin = wordOfTheGame.length();
-                    System.out.println("LICZBA LITEREK DO ODGADNIECIA " + lengthToWin);
+                    numberOfLettersToGuess = wordOfTheGame.length();
+                    System.out.println("LICZBA LITEREK DO ODGADNIECIA " + numberOfLettersToGuess);
                     out.println(words.get(index));
+                    out.println("LENGTH"+ numberOfLettersToGuess);
                 }
+                
+                
 
                 // ODEBRANIE OD SERWERA LITERKI 3 (GAME.JAVA)
                 if (info.equals("A")) {
@@ -70,6 +73,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'a') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -92,6 +97,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'b') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -113,6 +120,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'c') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -134,6 +143,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'd') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -155,6 +166,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'e') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -176,6 +189,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'f') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -197,6 +212,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'g') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -218,6 +235,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'h') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -239,6 +258,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'i') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -260,6 +281,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'j') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -281,6 +304,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'k') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -302,6 +327,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'l') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -323,6 +350,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'm') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -344,6 +373,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'n') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -365,6 +396,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'o') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -386,6 +419,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'p') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -407,6 +442,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'q') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -428,6 +465,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'r') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -449,6 +488,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 's') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -470,6 +511,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 't') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -491,6 +534,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'u') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -512,6 +557,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'v') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -533,6 +580,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'w') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -554,6 +603,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'x') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -575,6 +626,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'y') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
 
@@ -596,6 +649,8 @@ public class ClientHandler extends Thread {
                         for (int i = 0; i < wordOfTheGame.length(); i++) {
                             if (wordOfTheGame.charAt(i) == 'z') {
                                 positions.add(i);
+                                numberOfLettersToGuess--;
+                                out.println("LENGTH"+ numberOfLettersToGuess);
                             }
                         }
                         // wysyla do client read thread 4
