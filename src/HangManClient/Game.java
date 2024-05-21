@@ -9,21 +9,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-public class Game extends JFrame implements WindowListener, ActionListener {
+public class Game extends JFrame implements WindowListener {
 
-    private String level;
     private PrintWriter out;
-    private BufferedReader in;
     private Socket socket;
+    private JPanel keyboardPanel;
+    private PanelForWord panel1;
     static ArrayList<JLabel> labels;
     static String buttonText = "";
     static Game gameInstance;
 
-    public Game(String level, Socket socket) {
-        this.level = level;
+    public Game(Socket socket) {
+
         this.socket = socket;
         gameInstance = this;
         labels = new ArrayList<>();
+
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException ex) {
@@ -32,44 +33,18 @@ public class Game extends JFrame implements WindowListener, ActionListener {
 
         out.println("word");
 
+        init();
+
+    }
+
+    private void init() {
         JPanel upperPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
+        keyboardPanel = new JPanel();
+        panel1 = new PanelForWord();
 
-        JPanel mainBannedPanel = new JPanel();
-        JPanel keyboardPanel = new JPanel();
-        JPanel bannedPanel1 = new JPanel();
-        JPanel bannedPanel2 = new JPanel();
-        PanelForWord panel1 = new PanelForWord();
-
-        JLabel bannedHeader = new JLabel("Banned letters");
-        JLabel bannedLetters1 = new JLabel("a,b,c,d,e,f,g,h,i,j,k");
-        JLabel bannedLetters2 = new JLabel("a,b,c,d,e,f,g,h,i,j,k");
-        JLabel timeLabel = new JLabel("Time 2:00");
-
-        // Tworzenie przycisków z literami alfabetu
-        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        for (char letter : alphabet) {
-            JButton button = new JButton(String.valueOf(letter));
-            button.setForeground(Color.yellow);
-            button.setFont(new Font("MV Boli", Font.PLAIN, 18));
-            button.setBackground(new Color(21, 194, 82));
-            button.setBorder(BorderFactory.createLineBorder(Color.yellow, 2, true));
-            button.setPreferredSize(new Dimension(35, 35));
-            button.setFocusable(false);
-            //button.addActionListener(this); // Dodanie nasłuchiwacza zdarzeń
-            keyboardPanel.add(button); // Dodanie przycisku do ramki
-
-            button.addActionListener(e -> {
-                JButton clickedButton = (JButton) e.getSource();
-                buttonText = clickedButton.getText();
-                System.out.println("Kliknięto przycisk: " + buttonText);
-                // WYSLANIE DO SERWERA LITERKI 3
-                out.println(buttonText);
-                clickedButton.setEnabled(false);
-                // Tutaj dodaj odpowiednie działania, które mają być wykonane po kliknięciu przycisku
-
-            });
-        }
+        createKeyboard();
+        createYellowLines();
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
@@ -87,96 +62,61 @@ public class Game extends JFrame implements WindowListener, ActionListener {
 
         panel1.setBounds(125, 50, 450, 100);
         panel1.setBackground(new Color(24, 179, 240));
-
         panel1.setLayout(null);
-
-        JLabel labelForletter1 = new JLabel("");
-        JLabel labelForletter2 = new JLabel("");
-        JLabel labelForletter3 = new JLabel("");
-        JLabel labelForletter4 = new JLabel("");
-        JLabel labelForletter5 = new JLabel("");
-        JLabel labelForletter6 = new JLabel("");
-        JLabel labelForletter7 = new JLabel("");
-        JLabel labelForletter8 = new JLabel("");
-        JLabel labelForletter9 = new JLabel("");
-        JLabel labelForletter10 = new JLabel("");
-
-        labels.add(labelForletter1);
-        labels.add(labelForletter2);
-        labels.add(labelForletter3);
-        labels.add(labelForletter4);
-        labels.add(labelForletter5);
-        labels.add(labelForletter6);
-        labels.add(labelForletter7);
-        labels.add(labelForletter8);
-        labels.add(labelForletter9);
-        labels.add(labelForletter10);
-
-        for (JLabel label : labels) {
-            label.setForeground(Color.yellow);
-            label.setFont(new Font("MV Boli", Font.PLAIN, 18));
-        }
-        labelForletter1.setBounds(17, 25, 50, 20);
-        labelForletter2.setBounds(62, 25, 50, 20);
-        labelForletter3.setBounds(107, 25, 50, 20);
-        labelForletter4.setBounds(152, 25, 50, 20);
-        labelForletter5.setBounds(197, 25, 50, 20);
-        labelForletter6.setBounds(242, 25, 50, 20);
-        labelForletter7.setBounds(287, 25, 50, 20);
-        labelForletter8.setBounds(332, 25, 50, 20);
-        labelForletter9.setBounds(377, 25, 50, 20);
-        labelForletter10.setBounds(422, 25, 50, 20);
-        panel1.add(labelForletter1);
-        panel1.add(labelForletter2);
-        panel1.add(labelForletter3);
-        panel1.add(labelForletter4);
-        panel1.add(labelForletter5);
-        panel1.add(labelForletter6);
-        panel1.add(labelForletter7);
-        panel1.add(labelForletter8);
-        panel1.add(labelForletter9);
-        panel1.add(labelForletter10);
-
-        bannedPanel1.setPreferredSize(new Dimension(200, 30));
-        bannedPanel1.setBackground(new Color(24, 179, 240));
-
-        bannedPanel2.setPreferredSize(new Dimension(200, 30));
-        bannedPanel2.setBackground(new Color(24, 179, 240));
-
-        bannedHeader.setForeground(Color.yellow);
-        bannedHeader.setFont(new Font("MV Boli", Font.PLAIN, 18));
-        mainBannedPanel.add(bannedHeader);
-
-        bannedLetters1.setForeground(Color.yellow);
-        bannedLetters1.setFont(new Font(null, Font.PLAIN, 15));
-        bannedPanel1.add(bannedLetters1);
-
-        bannedLetters2.setForeground(Color.yellow);
-        bannedLetters2.setFont(new Font(null, Font.PLAIN, 15));
-        bannedPanel2.add(bannedLetters2);
-
-        timeLabel.setBounds(600, 0, 100, 40);
-        timeLabel.setForeground(Color.yellow);
-        timeLabel.setFont(new Font(null, Font.PLAIN, 20));
 
         bottomPanel.add(keyboardPanel);
         upperPanel.add(panel1);
-        upperPanel.add(mainBannedPanel);
-
-        upperPanel.add(timeLabel);
 
         addWindowListener(this);
         add(upperPanel);
         add(bottomPanel);
 
+        ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
+        setIconImage(hangManIcon.getImage());
         setResizable(false);
         setTitle("HangMan Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
 
-        System.out.println(ClientReadThread.lengthOfWord);
+    private void createKeyboard() {
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        for (char letter : alphabet) {
+            JButton button = new JButton(String.valueOf(letter));
+            button.setForeground(Color.yellow);
+            button.setFont(new Font("MV Boli", Font.PLAIN, 18));
+            button.setBackground(new Color(21, 194, 82));
+            button.setBorder(BorderFactory.createLineBorder(Color.yellow, 2, true));
+            button.setPreferredSize(new Dimension(35, 35));
+            button.setFocusable(false);
+
+            keyboardPanel.add(button);
+
+            button.addActionListener(e -> {
+                JButton clickedButton = (JButton) e.getSource();
+                buttonText = clickedButton.getText();
+                System.out.println("Kliknięto przycisk: " + buttonText);
+                out.println(buttonText);
+                clickedButton.setEnabled(false);
+                
+
+            });
+        }
+    }
+
+    private void createYellowLines() {
+        int j = 0;
+        for (int i = 0; i < 10; i++) {
+            JLabel laberForLetter = new JLabel("");
+            laberForLetter.setForeground(Color.yellow);
+            laberForLetter.setFont(new Font("MV Boli", Font.PLAIN, 18));
+            laberForLetter.setBounds(17 + j, 25, 50, 20);
+            labels.add(laberForLetter);
+            j += 45;
+            panel1.add(laberForLetter);
+        }
     }
 
     public void paint(Graphics g) {
@@ -304,12 +244,12 @@ public class Game extends JFrame implements WindowListener, ActionListener {
         }
         g2D.setStroke(oldStroke);
     }
-    
-        void showWinMessage(boolean isWon) {
+
+    void showWinMessage(boolean isWon) {
         Object[] options = {"Exit", "Try again", "Save in history of games"};
         int result = JOptionPane.showOptionDialog(
                 this,
-                ( isWon == true ? "Congratulations! You won": "Defeat"),
+                (isWon == true ? "Congratulations! You won" : "Defeat"),
                 (isWon == true ? "Win" : "Try again"),
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
@@ -317,38 +257,32 @@ public class Game extends JFrame implements WindowListener, ActionListener {
                 options,
                 options[1] // domyślnie zaznaczona opcja
         );
-        if (result == JOptionPane.YES_OPTION) {
-            System.out.println("Exit selected");
-            // Kod do zakończenia aplikacji
+        if (result == JOptionPane.YES_OPTION) { // when user clicks Exit
             dispose();
             System.exit(0);
-        } else if (result == JOptionPane.NO_OPTION) {
-            System.out.println("Try again selected");
-            // Uruchom nową grę
-            dispose();
-            ClientReadThread.attempts = 0;
-            new Game("easy", socket).setVisible(true);
 
-        } else if (result == JOptionPane.CANCEL_OPTION) {
-            System.out.println("Save in history of games selected");
-            // Kod do zapisania w historii gier
-            saveGameInHistory(isWon);
-            // Uruchom nową grę
+        } else if (result == JOptionPane.NO_OPTION) { // when user clicks Try again
             dispose();
             ClientReadThread.attempts = 0;
-            new Game("easy", socket).setVisible(true);
-        } else {
+            new Game(socket).setVisible(true);
+
+        } else if (result == JOptionPane.CANCEL_OPTION) {  // when user clicks save in history
+            saveGameInHistory(isWon);
+            dispose();
+            ClientReadThread.attempts = 0;
+            new Game(socket).setVisible(true);
+
+        } else { // When user cancel without choice
             System.out.println("Cancelled");
-            // Obsługa anulowania (np. gdy użytkownik zamknie okno dialogowe bez wyboru)
             dispose();
             System.exit(0);
         }
     }
-       
-        private void saveGameInHistory(boolean isWon) {
-        System.out.println("GAME SAVED");
+
+    private void saveGameInHistory(boolean isWon) {
         File file = new File("History.txt");
         BufferedWriter outToFile;
+
         try {
             outToFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
 
@@ -404,8 +338,4 @@ public class Game extends JFrame implements WindowListener, ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

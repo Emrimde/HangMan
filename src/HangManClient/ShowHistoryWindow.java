@@ -29,6 +29,8 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
     JPanel middlePanel;
 
     public ShowHistoryWindow(Socket socket) {
+        ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
+        setIconImage(hangManIcon.getImage());
         this.socket = socket;
         try {
             out = new PrintWriter(socket.getOutputStream(), true);

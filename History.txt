@@ -4,3 +4,9 @@ morning
 Defeat
 umbrella
 Win
+firework
+Defeat
+butterfly
+Defeat
+umbrella
+Win
