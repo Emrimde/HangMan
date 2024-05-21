@@ -12,7 +12,6 @@ import javax.swing.*;
 public class Game extends JFrame implements WindowListener, ActionListener {
 
     private String level;
-
     private PrintWriter out;
     private BufferedReader in;
     private Socket socket;

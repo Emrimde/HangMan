@@ -14,12 +14,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
 public class HangMan extends JFrame implements ActionListener, WindowListener {
 
     private JButton startButton;
+    private JButton showHistoryButton;
     public static Font mvBoli = new Font("MV Boli", Font.BOLD, 35);
     static int port = 6910;
     static String address = "127.0.0.1";
@@ -27,10 +29,13 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
     static Socket socket = null;
 
     public HangMan() {
-
+       ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
+        setIconImage(hangManIcon.getImage());
         ImageIcon cloud1 = new ImageIcon("cloud1.png");
         startButton = new JButton("Start");
         startButton.addActionListener(this);
+        showHistoryButton = new  JButton("Show history");
+        showHistoryButton.addActionListener(this);
         JPanel subPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         JPanel upperPanel = new JPanel();
@@ -40,6 +45,14 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         startButton.setBackground(new Color(21, 194, 82));
         startButton.setForeground(Color.yellow);
         startButton.setBorder(BorderFactory.createLineBorder(Color.yellow, 5, true));
+        
+        
+        showHistoryButton.setFont(mvBoli);
+        showHistoryButton.setFocusable(false);
+        showHistoryButton.setBackground(new Color(21, 194, 82));
+        showHistoryButton.setForeground(Color.yellow);
+        showHistoryButton.setBorder(BorderFactory.createLineBorder(Color.yellow, 5, true));
+        
 
         JLabel label = new JLabel("HangMan");
         JLabel cloudLabel1 = new JLabel();
@@ -49,9 +62,11 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         label.setFont(mvBoli);
         label.setForeground(new Color(247, 240, 15));
 
-        subPanel.setPreferredSize(new Dimension(200, 50));
-        subPanel.setLayout(new BorderLayout());
+        subPanel.setPreferredSize(new Dimension(300, 140));
+        subPanel.setLayout(new BorderLayout(0, 20));
         subPanel.add(startButton, BorderLayout.CENTER);
+        subPanel.add(showHistoryButton,BorderLayout.SOUTH);
+        subPanel.setBackground(new Color(21, 194, 82));
 
         bottomPanel.setBackground(new Color(21, 194, 82));
         bottomPanel.setPreferredSize(new Dimension(500, 200));
@@ -74,6 +89,7 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         setLocationRelativeTo(null);
         setVisible(true);
 
+       
     }
 
     public void connectWithServer() {
@@ -103,6 +119,10 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         if (e.getSource() == startButton) {
             dispose();
             new SetLevelWindow(socket);
+        }
+         if (e.getSource() == showHistoryButton) {
+            dispose();
+            new ShowHistoryWindow(socket);
         }
     }
 
