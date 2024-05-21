@@ -29,6 +29,7 @@ public class SetLevelWindow extends JFrame implements ActionListener, WindowList
         } catch (IOException ex) {
             Logger.getLogger(SetLevelWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         JPanel upperPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         JLabel selectLabel = new JLabel("Select Level");
@@ -79,6 +80,8 @@ public class SetLevelWindow extends JFrame implements ActionListener, WindowList
         getContentPane().setBackground(new Color(24, 179, 240));
         setLocationRelativeTo(null);
 
+        ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
+        setIconImage(hangManIcon.getImage());
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -87,20 +90,20 @@ public class SetLevelWindow extends JFrame implements ActionListener, WindowList
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == easyButton) {
             System.out.println("Time set to 2 minutes");
-            new Game("easy",socket);
+            new Game(socket);
             dispose();
             
             //There will be new window
         }
         else if (e.getSource() == mediumButton) {
             System.out.println("Time set to 1:30 minutes");
-              new Game("medium",socket);
+              new Game(socket);
             dispose();
             
         }
         else if (e.getSource() == hardButton) {
             System.out.println("Time set to 1 minutes");
-            new Game("hard",socket);
+            new Game(socket);
             dispose();
             
         }
