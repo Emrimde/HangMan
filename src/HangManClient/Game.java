@@ -1,17 +1,10 @@
 package HangManClient;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-
-import java.io.PrintWriter;
+import java.awt.event.*;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -39,7 +32,6 @@ public class Game extends JFrame implements WindowListener, ActionListener {
         }
 
         out.println("word");
-        
 
         JPanel upperPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
@@ -76,11 +68,10 @@ public class Game extends JFrame implements WindowListener, ActionListener {
                 out.println(buttonText);
                 clickedButton.setEnabled(false);
                 // Tutaj dodaj odpowiednie działania, które mają być wykonane po kliknięciu przycisku
-               
+
             });
         }
 
-        
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         upperPanel.setLayout(null);
@@ -90,7 +81,6 @@ public class Game extends JFrame implements WindowListener, ActionListener {
         bottomPanel.setBackground(new Color(21, 194, 82));
         bottomPanel.setPreferredSize(new Dimension(700, 300));
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
-
 
         keyboardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         keyboardPanel.setPreferredSize(new Dimension(400, 200));
@@ -166,7 +156,6 @@ public class Game extends JFrame implements WindowListener, ActionListener {
         bannedLetters2.setFont(new Font(null, Font.PLAIN, 15));
         bannedPanel2.add(bannedLetters2);
 
-
         timeLabel.setBounds(600, 0, 100, 40);
         timeLabel.setForeground(Color.yellow);
         timeLabel.setFont(new Font(null, Font.PLAIN, 20));
@@ -191,40 +180,11 @@ public class Game extends JFrame implements WindowListener, ActionListener {
         System.out.println(ClientReadThread.lengthOfWord);
     }
 
-public void showWinMessage() {
-    Object[] options = {"Exit", "Try again"};
-    int result = JOptionPane.showOptionDialog(
-            this,
-            "Congratulations! You won!",
-            "Win!",
-            JOptionPane.YES_NO_CANCEL_OPTION,
-            JOptionPane.INFORMATION_MESSAGE,
-            null,
-            options,
-            options[1] // domyślnie zaznaczona opcja
-    );
-    if (result == JOptionPane.YES_OPTION) {
-        System.out.println("Exit selected");
-        // Kod do zakończenia aplikacji
-        dispose();
-        System.exit(0);
-    } else if (result == JOptionPane.NO_OPTION) {
-        System.out.println("Try again selected");
-        // Uruchom nową grę
-        dispose();
-        new Game("easy", socket).setVisible(true);
-    } else {
-        System.out.println("Cancelled");
-        // Obsługa anulowania (np. gdy użytkownik zamknie okno dialogowe bez wyboru)
-        dispose();
-        System.exit(0);
-    }
-}
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
         Stroke oldStroke = g2D.getStroke();
-        g2D.setStroke(new BasicStroke(10));
+        g2D.setStroke(new BasicStroke(12));
         g2D.setColor(new Color(133, 82, 12));
         int choice;
         synchronized (ClientReadThread.class) {
@@ -339,43 +299,75 @@ public void showWinMessage() {
                 g2D.drawLine(150, 335, 135, 325);
                 g2D.drawLine(150, 350, 165, 375);
                 g2D.drawLine(150, 350, 135, 375);
-
-                Object[] options = {"Exit", "Try again"};
-                int result = JOptionPane.showOptionDialog(
-                        null,
-                        "Defeat",
-                        "Try again!",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        options[1] // domyślnie zaznaczona opcja
-                );
-                if (result == JOptionPane.YES_OPTION) {
-                    System.out.println("Exit selected");
-                    // Kod do zakończenia aplikacji
-                    ClientReadThread.attempts = 0;
-                    out.println("end");
-                    dispose();
-                    System.exit(0);
-                } else if (result == JOptionPane.NO_OPTION) {
-                    System.out.println("Try again selected");
-                    // Uruchom nową grę
-                    ClientReadThread.attempts = 0;
-                    dispose();
-                    new Game("easy", socket).setVisible(true);
-                } else {
-                    System.out.println("Cancelled");
-                    // Obsługa anulowania (np. gdy użytkownik zamknie okno dialogowe bez wyboru)
-                    ClientReadThread.attempts = 0;
-                    out.println("end");
-                    dispose();
-                    System.exit(0);
-                }
+                showWinMessage(false);
                 break;
 
         }
         g2D.setStroke(oldStroke);
+    }
+    
+        void showWinMessage(boolean isWon) {
+        Object[] options = {"Exit", "Try again", "Save in history of games"};
+        int result = JOptionPane.showOptionDialog(
+                this,
+                ( isWon == true ? "Congratulations! You won": "Defeat"),
+                (isWon == true ? "Win" : "Try again"),
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[1] // domyślnie zaznaczona opcja
+        );
+        if (result == JOptionPane.YES_OPTION) {
+            System.out.println("Exit selected");
+            // Kod do zakończenia aplikacji
+            dispose();
+            System.exit(0);
+        } else if (result == JOptionPane.NO_OPTION) {
+            System.out.println("Try again selected");
+            // Uruchom nową grę
+            dispose();
+            ClientReadThread.attempts = 0;
+            new Game("easy", socket).setVisible(true);
+
+        } else if (result == JOptionPane.CANCEL_OPTION) {
+            System.out.println("Save in history of games selected");
+            // Kod do zapisania w historii gier
+            saveGameInHistory(isWon);
+            // Uruchom nową grę
+            dispose();
+            ClientReadThread.attempts = 0;
+            new Game("easy", socket).setVisible(true);
+        } else {
+            System.out.println("Cancelled");
+            // Obsługa anulowania (np. gdy użytkownik zamknie okno dialogowe bez wyboru)
+            dispose();
+            System.exit(0);
+        }
+    }
+       
+        private void saveGameInHistory(boolean isWon) {
+        System.out.println("GAME SAVED");
+        File file = new File("History.txt");
+        BufferedWriter outToFile;
+        try {
+            outToFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
+
+            outToFile.write(ClientReadThread.word);
+            outToFile.newLine();
+            if (isWon) {
+                outToFile.write("Win");
+            } else {
+                outToFile.write("Defeat");
+            }
+            outToFile.newLine();
+            outToFile.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

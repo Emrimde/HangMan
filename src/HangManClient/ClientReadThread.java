@@ -15,6 +15,7 @@ public class ClientReadThread extends Thread {
     static int lengthOfWord = 0;
     static int attempts = 0;
     static int numberOfLettersToGuess = 10;
+    static String word;
 
     public ClientReadThread(Socket socket) {
 
@@ -81,7 +82,7 @@ public class ClientReadThread extends Thread {
                 }
                 System.out.println("LICZBA LITER DO ODGADNIECIA" + lengthToWin );
                  if (numberOfLettersToGuess == 0) {
-                    SwingUtilities.invokeLater(() -> Game.gameInstance.showWinMessage());
+                    SwingUtilities.invokeLater(() -> Game.gameInstance.showWinMessage(true));
                 }
                
             }
@@ -100,152 +101,152 @@ public class ClientReadThread extends Thread {
 
     private void checkIfMessage(String info) {
         if (info.equals("elephant")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("computer")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("sunshine")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("necklace")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("scissors")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("hospital")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("rainbow")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("diamond")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("keyboard")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("mountain")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("sandwich")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("painting")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("internet")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("firework")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("umbrella")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("airplane")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("football")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("grandma")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("birthday")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("medicine")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("triangle")) {
-            String word = info;
+            word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("pancakes")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("building")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("cupboard")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("daughter")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("morning")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("whistle")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("adventure")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("butterfly")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
         if (info.equals("telescope")) {
-            String word = info;
+             word = info;
             System.out.println(word);
             lengthOfWord = word.length();
         }
