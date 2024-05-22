@@ -10,7 +10,7 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
 
     private JButton returnButton;
     private PrintWriter out;
-    JPanel middlePanel;
+    private JPanel middlePanel;
 
     public ShowHistoryWindow() {
         
@@ -32,16 +32,16 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
         setVisible(true);
     }
 
-    private void init() {
-
+     private void init() {
         JPanel upperPanel = new JPanel();
         middlePanel = new JPanel();
         JPanel bottomPanel = new JPanel();
-
+        
         returnButton = new JButton("Return");
 
         JLabel label = new JLabel("History");
-
+        JScrollPane scrollPane = new JScrollPane(middlePanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         returnButton.setForeground(Color.yellow);
         returnButton.setFont(HangMan.mvBoli);
         returnButton.setBackground(new Color(24, 179, 240));
@@ -52,13 +52,14 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
         label.setFont(HangMan.mvBoli);
         label.setForeground(Color.yellow);
         
-
         upperPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
         upperPanel.setBackground(new Color(24, 179, 240));
         upperPanel.setPreferredSize(new Dimension(700, 100));
         upperPanel.add(label);
+        
         middlePanel.setBackground(new Color(24, 179, 240));
-        middlePanel.setPreferredSize(new Dimension(700, 500));
+        middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS)); // Ustawienie BoxLayout dla middlePanel
+        
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
         bottomPanel.setBackground(new Color(24, 179, 240));
         bottomPanel.setPreferredSize(new Dimension(700, 100));
@@ -66,31 +67,31 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
         
         addWindowListener(this);
         returnButton.addActionListener(this);
-        loadHistory();
         
         add(upperPanel, BorderLayout.NORTH);
-        add(middlePanel, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER); // Dodanie JScrollPane, a nie middlePanel
         add(bottomPanel, BorderLayout.SOUTH);
 
+        loadHistory();
     }
 
-    
-       private void loadHistory() {
+    private void loadHistory() {
         try (BufferedReader br = new BufferedReader(new FileReader("History.txt"))) {
             String line;
             int i = 0;
             while ((line = br.readLine()) != null) {
-                
                 String keyword = line;
                 String result = br.readLine();
                 if (result != null) {
-                    JLabel gameLabel = new JLabel(++i + ". "+ "Keyword: " + keyword + " - Result: " + result);
+                    JLabel gameLabel = new JLabel(++i + ". " + "Keyword: " + keyword + " - Result: " + result);
                     gameLabel.setFont(new Font("MV Boli", Font.PLAIN, 22));
                     gameLabel.setForeground(Color.yellow);
-                    gameLabel.setAlignmentX(CENTER_ALIGNMENT);
+                    gameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                     middlePanel.add(gameLabel);
                 }
             }
+            middlePanel.revalidate(); // Odświeżenie panelu po dodaniu wszystkich etykiet
+            middlePanel.repaint();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -134,7 +135,6 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
     @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
-        new HangMan();
-        
+        new HangMan();  
     }
 }
