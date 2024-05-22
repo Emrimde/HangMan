@@ -32,3 +32,7 @@ airplane
 Defeat
 diamond
 Defeat
+grandma
+Win
+diamond
+Defeat
