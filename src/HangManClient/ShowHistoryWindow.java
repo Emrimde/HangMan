@@ -1,42 +1,29 @@
 package HangManClient;
 
-import static HangManClient.HangMan.out;
-import static HangManClient.HangMan.socket;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.logging.*;
 import javax.swing.*;
 
 public class ShowHistoryWindow extends JFrame implements WindowListener, ActionListener {
 
     private JButton returnButton;
-    private Socket socket;
     private PrintWriter out;
     JPanel middlePanel;
 
-    public ShowHistoryWindow(Socket socket) {
+    public ShowHistoryWindow() {
+        
+       
         ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
         setIconImage(hangManIcon.getImage());
-        this.socket = socket;
+        
         try {
-            out = new PrintWriter(socket.getOutputStream(), true);
+            out = new PrintWriter(HangMan.socket.getOutputStream(), true);
         } catch (IOException ex) {
             Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         init();
         setTitle("HangMan Game");
         setSize(700, 700);
