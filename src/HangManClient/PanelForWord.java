@@ -1,18 +1,10 @@
 package HangManClient;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JLabel;
+import java.awt.*;
 import javax.swing.JPanel;
 
 public class PanelForWord extends JPanel {
-
     public PanelForWord() {
-
         setLayout(new FlowLayout());
     }
 
@@ -26,15 +18,12 @@ public class PanelForWord extends JPanel {
         int x = 0;
         int x2 = 0;
 
-        int dlugoscLinii = 25; // Długość linii
-        int przerwa = 20; // Szerokość przerwy między liniami
+        int lineLength = 25; // The length of line 
+        int breakBetweenLines = 20; // The width of break between lines
 
         for (int i = 0; i < ClientReadThread.lengthOfWord; i++) {
-            g2D.drawLine(x + 10, this.getHeight() / 2, x + dlugoscLinii + 10, this.getHeight() / 2);
-            x += dlugoscLinii + przerwa; // Dodaj szerokość linii i przerwy
+            g2D.drawLine(x + 10, this.getHeight() / 2, x + lineLength + 10, this.getHeight() / 2);
+            x += lineLength + breakBetweenLines; // Dodaj szerokość linii i przerwy
         }
-
-        
     }
-
 }
