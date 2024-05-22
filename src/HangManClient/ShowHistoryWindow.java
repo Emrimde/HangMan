@@ -13,17 +13,12 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
     private JPanel middlePanel;
 
     public ShowHistoryWindow() {
-        
-       
-        ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
-        setIconImage(hangManIcon.getImage());
-        
         try {
             out = new PrintWriter(HangMan.socket.getOutputStream(), true);
         } catch (IOException ex) {
             Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         init();
         setTitle("HangMan Game");
         setSize(700, 700);
@@ -32,11 +27,11 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
         setVisible(true);
     }
 
-     private void init() {
+    private void init() {
         JPanel upperPanel = new JPanel();
         middlePanel = new JPanel();
         JPanel bottomPanel = new JPanel();
-        
+
         returnButton = new JButton("Return");
 
         JLabel label = new JLabel("History");
@@ -51,23 +46,26 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
 
         label.setFont(HangMan.mvBoli);
         label.setForeground(Color.yellow);
-        
+
         upperPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
         upperPanel.setBackground(new Color(24, 179, 240));
         upperPanel.setPreferredSize(new Dimension(700, 100));
         upperPanel.add(label);
-        
+
         middlePanel.setBackground(new Color(24, 179, 240));
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS)); // Ustawienie BoxLayout dla middlePanel
-        
+
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
         bottomPanel.setBackground(new Color(24, 179, 240));
         bottomPanel.setPreferredSize(new Dimension(700, 100));
         bottomPanel.add(returnButton);
-        
+
         addWindowListener(this);
         returnButton.addActionListener(this);
-        
+
+        ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
+        setIconImage(hangManIcon.getImage());
+
         add(upperPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER); // Dodanie JScrollPane, a nie middlePanel
         add(bottomPanel, BorderLayout.SOUTH);
@@ -96,8 +94,8 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
             e.printStackTrace();
         }
     }
-       
-   @Override
+
+    @Override
     public void windowOpened(WindowEvent e) {
 
     }
@@ -135,6 +133,6 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
     @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
-        new HangMan();  
+        new HangMan();
     }
 }

@@ -3,13 +3,10 @@ package HangManServer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HangManServer {
-
     private static final int port = 6910;
     private ServerSocket serverSocket = null;
     private Socket socket;
@@ -29,7 +26,7 @@ public class HangManServer {
             if (serverSocket == null) {
                 break;
             }
-
+            
             try {
                 socket = serverSocket.accept();
                 System.out.println("New client");
@@ -54,5 +51,4 @@ public class HangManServer {
         HangManServer server = new HangManServer();
         server.work();
     }
-
 }

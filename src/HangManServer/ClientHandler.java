@@ -2,8 +2,7 @@ package HangManServer;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +30,6 @@ public class ClientHandler extends Thread {
             String wordOfTheGame = "";
             int numberOfLettersToGuess = 0;
             int attempts = 0;
-            char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
             while ((info = in.readLine()) != null) {
                 if (info.equals("end")) {
@@ -51,36 +49,44 @@ public class ClientHandler extends Thread {
                     wordOfTheGame = word;
                     numberOfLettersToGuess = wordOfTheGame.length();
                     System.out.println("Number of letters to guess" + numberOfLettersToGuess);
-                    out.println(words.get(index));
+                    out.println("WORD" + words.get(index));
                     out.println("LENGTH" + numberOfLettersToGuess);
                 }
 
-                
-                 // ODEBRANIE OD SERWERA LITERKI 3 (GAME.JAVA)
+                // Receiving from client a letter (GAME.JAVA)
                 if (info.equals("A") || info.equals("B") || info.equals("C") || info.equals("D") || info.equals("E")
                         || info.equals("F") || info.equals("G") || info.equals("H") || info.equals("I") || info.equals("J")
                         || info.equals("K") || info.equals("L") || info.equals("M") || info.equals("N") || info.equals("O")
                         || info.equals("P") || info.equals("Q") || info.equals("R") || info.equals("S") || info.equals("T")
                         || info.equals("U") || info.equals("V") || info.equals("W") || info.equals("X") || info.equals("Y")
                         || info.equals("Z")) {
-                    System.out.println("I get message - " + info + " " + wordOfTheGame);
-                    ArrayList<Integer> positions = new ArrayList<>();
-                    for(char letter : alphabet){
-                        if (wordOfTheGame.contains(String.valueOf(letter))){
-                             for (int i = 0; i < wordOfTheGame.length(); i++) {
-                            if (wordOfTheGame.charAt(i) == letter) {
-                                positions.add(i);
-                                numberOfLettersToGuess--;
-                                out.println("LENGTH" + numberOfLettersToGuess);
+                    for (char letter = 'a'; letter <= 'z'; letter++) {
+                        if (info.equals(String.valueOf(Character.toUpperCase(letter)))) {
+                            System.out.println("I get message - " + info + " " + wordOfTheGame);
+                            ArrayList<Integer> positions = new ArrayList<>();
+
+                            if (wordOfTheGame.contains(String.valueOf(letter))) {
+                                for (int i = 0; i < wordOfTheGame.length(); i++) {
+                                    if (wordOfTheGame.charAt(i) == letter) {
+                                        positions.add(i);
+                                        numberOfLettersToGuess--;
+                                        out.println("LENGTH" + numberOfLettersToGuess);
+                                    }
+                                }
+
+                                out.println("Position" + positions);
+
+                                System.out.println("Ten wyraz zawiera literę " + letter);
+                            } else {
+                                System.out.println("Nie ma litery");
+                                attempts++;
+                                out.println("Wrong" + attempts);
                             }
-                        }
-                             
+
+                            break; // Jeśli litery 'info' została znaleziona, możemy przerwać pętlę.
                         }
                     }
                 }
-
-               
-                
 
             }
             System.out.println("Client leaves");

@@ -1,25 +1,14 @@
 package HangManClient;
 
 import java.awt.*;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.awt.event.*;
+import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-
 import javax.swing.*;
 
 public class HangMan extends JFrame implements ActionListener, WindowListener {
-
     private JButton startButton;
     private JButton showHistoryButton;
     public static Font mvBoli = new Font("MV Boli", Font.BOLD, 35);
@@ -29,43 +18,53 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
     static Socket socket = null;
 
     public HangMan() {
-       ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
+        init();
+        addWindowListener(this);
+        setTitle("HangMan Game");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void init() {
+        ImageIcon hangManIcon = new ImageIcon("hangmanIcon.png");
         setIconImage(hangManIcon.getImage());
         ImageIcon cloud1 = new ImageIcon("cloud1.png");
         startButton = new JButton("Start");
         startButton.addActionListener(this);
-        showHistoryButton = new  JButton("Show history");
+        showHistoryButton = new JButton("Show history");
         showHistoryButton.addActionListener(this);
         JPanel subPanel = new JPanel();
         JPanel bottomPanel = new JPanel();
         JPanel upperPanel = new JPanel();
 
+        JLabel header = new JLabel("HangMan");
+        JLabel cloudLabel1 = new JLabel();
+        JLabel cloudLabel2 = new JLabel();
+        
         startButton.setFont(mvBoli);
         startButton.setFocusable(false);
         startButton.setBackground(new Color(21, 194, 82));
         startButton.setForeground(Color.yellow);
         startButton.setBorder(BorderFactory.createLineBorder(Color.yellow, 5, true));
-        
-        
+
         showHistoryButton.setFont(mvBoli);
         showHistoryButton.setFocusable(false);
         showHistoryButton.setBackground(new Color(21, 194, 82));
         showHistoryButton.setForeground(Color.yellow);
         showHistoryButton.setBorder(BorderFactory.createLineBorder(Color.yellow, 5, true));
-        
 
-        JLabel label = new JLabel("HangMan");
-        JLabel cloudLabel1 = new JLabel();
         cloudLabel1.setIcon(cloud1);
-        JLabel cloudLabel2 = new JLabel();
         cloudLabel2.setIcon(cloud1);
-        label.setFont(mvBoli);
-        label.setForeground(new Color(247, 240, 15));
+
+        header.setFont(mvBoli);
+        header.setForeground(new Color(247, 240, 15));
 
         subPanel.setPreferredSize(new Dimension(300, 140));
         subPanel.setLayout(new BorderLayout(0, 20));
         subPanel.add(startButton, BorderLayout.CENTER);
-        subPanel.add(showHistoryButton,BorderLayout.SOUTH);
+        subPanel.add(showHistoryButton, BorderLayout.SOUTH);
         subPanel.setBackground(new Color(21, 194, 82));
 
         bottomPanel.setBackground(new Color(21, 194, 82));
@@ -78,22 +77,12 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         upperPanel.setPreferredSize(new Dimension(500, 300));
         upperPanel.setBackground(new Color(24, 179, 240));
         upperPanel.add(cloudLabel1);
-        upperPanel.add(label);
+        upperPanel.add(header);
         upperPanel.add(cloudLabel2);
         add(upperPanel, BorderLayout.NORTH);
-
-        addWindowListener(this);
-        setTitle("HangMan Game");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setVisible(true);
-
-       
     }
 
     public void connectWithServer() {
-
         try {
             socket = new Socket(address, port);
         } catch (IOException ex) {
@@ -117,8 +106,8 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         if (e.getSource() == startButton) {
             new Game();
             dispose();
-        }
-         if (e.getSource() == showHistoryButton) {
+        } 
+        if (e.getSource() == showHistoryButton) {
             dispose();
             new ShowHistoryWindow();
         }

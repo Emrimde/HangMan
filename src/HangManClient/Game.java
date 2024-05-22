@@ -18,7 +18,6 @@ public class Game extends JFrame implements WindowListener {
     static Game gameInstance;
 
     public Game() {
-        
         gameInstance = this;
         labels = new ArrayList<>();
 
@@ -31,7 +30,6 @@ public class Game extends JFrame implements WindowListener {
         out.println("word");
 
         init();
-
     }
 
     private void init() {
@@ -97,8 +95,6 @@ public class Game extends JFrame implements WindowListener {
                 System.out.println("Kliknięto przycisk: " + buttonText);
                 out.println(buttonText);
                 clickedButton.setEnabled(false);
-                
-
             });
         }
     }
@@ -252,8 +248,9 @@ public class Game extends JFrame implements WindowListener {
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
                 options,
-                options[1] // domyślnie zaznaczona opcja
+                options[1] // default option
         );
+        
         if (result == JOptionPane.YES_OPTION) { // when user clicks Exit
             out.println("end");
             dispose();
@@ -296,6 +293,7 @@ public class Game extends JFrame implements WindowListener {
             } else {
                 outToFile.write("Defeat");
             }
+            
             outToFile.newLine();
             outToFile.close();
 

@@ -4,13 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManServer/HangManServer.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManClient/SetLevelWindow.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManClient/ShowHistoryWindow.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManClient/HangMan.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManClient/Main.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManClient/ClientReadThread.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManServer/ClientHandler.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Hangmaan/src/HangManClient/Game.java</file>
         </group>
     </open-files>
 </project-private>
