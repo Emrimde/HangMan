@@ -109,20 +109,18 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
             Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        out.println("Hello");
-        out.println("Hello again");
-
+        out.println("Connection has begun!");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
+            new Game();
             dispose();
-            new SetLevelWindow(socket);
         }
          if (e.getSource() == showHistoryButton) {
             dispose();
-            new ShowHistoryWindow(socket);
+            new ShowHistoryWindow();
         }
     }
 

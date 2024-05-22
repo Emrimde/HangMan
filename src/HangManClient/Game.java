@@ -3,7 +3,6 @@ package HangManClient;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,21 +11,19 @@ import javax.swing.*;
 public class Game extends JFrame implements WindowListener {
 
     private PrintWriter out;
-    private Socket socket;
     private JPanel keyboardPanel;
     private PanelForWord panel1;
     static ArrayList<JLabel> labels;
     static String buttonText = "";
     static Game gameInstance;
 
-    public Game(Socket socket) {
-
-        this.socket = socket;
+    public Game() {
+        
         gameInstance = this;
         labels = new ArrayList<>();
 
         try {
-            out = new PrintWriter(socket.getOutputStream(), true);
+            out = new PrintWriter(HangMan.socket.getOutputStream(), true);
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -258,24 +255,30 @@ public class Game extends JFrame implements WindowListener {
                 options[1] // domyślnie zaznaczona opcja
         );
         if (result == JOptionPane.YES_OPTION) { // when user clicks Exit
+            out.println("end");
             dispose();
             System.exit(0);
 
-        } else if (result == JOptionPane.NO_OPTION) { // when user clicks Try again
+        } 
+        else if (result == JOptionPane.NO_OPTION) { // when user clicks Try again
             dispose();
             ClientReadThread.attempts = 0;
-            new Game(socket).setVisible(true);
+            new Game().setVisible(true);
 
-        } else if (result == JOptionPane.CANCEL_OPTION) {  // when user clicks save in history
+        }
+        else if (result == JOptionPane.CANCEL_OPTION) {  // when user clicks save in history
             saveGameInHistory(isWon);
             dispose();
             ClientReadThread.attempts = 0;
-            new Game(socket).setVisible(true);
+            new HangMan();
 
-        } else { // When user cancel without choice
+        } 
+        else { // When user cancel without choice
             System.out.println("Cancelled");
+            out.println("end");
             dispose();
             System.exit(0);
+            
         }
     }
 

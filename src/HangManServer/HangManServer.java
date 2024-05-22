@@ -11,13 +11,10 @@ import java.util.logging.Logger;
 public class HangManServer {
 
     private static final int port = 6910;
-    static ServerSocket serverSocket = null;
+    private ServerSocket serverSocket = null;
     private Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
 
     public HangManServer() {
-
         try {
             serverSocket = new ServerSocket(port);
             System.out.println("I'm working");
@@ -35,7 +32,7 @@ public class HangManServer {
 
             try {
                 socket = serverSocket.accept();
-                System.out.println("new client");
+                System.out.println("New client");
 
                 ClientHandler handler = new ClientHandler(socket);
                 handler.start();
