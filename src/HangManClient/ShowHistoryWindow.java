@@ -67,14 +67,26 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
         setIconImage(hangManIcon.getImage());
 
         add(upperPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER); // Dodanie JScrollPane, a nie middlePanel
+        add(scrollPane, BorderLayout.CENTER); // Dodanie JScrollPane
         add(bottomPanel, BorderLayout.SOUTH);
 
         loadHistory();
     }
 
     private void loadHistory() {
-        try (BufferedReader br = new BufferedReader(new FileReader("History.txt"))) {
+        File historyFile = new File("History.txt");
+
+        if (!historyFile.exists()) {
+            try {
+                historyFile.createNewFile();
+            } catch (IOException e) {
+                Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, "Nie udało się utworzyć pliku History.txt", e);
+            }
+        }
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(historyFile));
             String line;
             int i = 0;
             while ((line = br.readLine()) != null) {
@@ -88,10 +100,16 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
                     middlePanel.add(gameLabel);
                 }
             }
-            middlePanel.revalidate(); // Odświeżenie panelu po dodaniu wszystkich etykiet
-            middlePanel.repaint();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, "Nie udało się zamknąć BufferedReader", e);
+                }
+            }
         }
     }
 
@@ -107,7 +125,7 @@ public class ShowHistoryWindow extends JFrame implements WindowListener, ActionL
 
     @Override
     public void windowClosed(WindowEvent e) {
-
+        
     }
 
     @Override

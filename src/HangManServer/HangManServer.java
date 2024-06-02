@@ -15,8 +15,8 @@ public class HangManServer {
         try {
             serverSocket = new ServerSocket(port);
             System.out.println("I'm working");
-        } catch (IOException ex) {
-            Logger.getLogger(HangManServer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            Logger.getLogger(HangManServer.class.getName()).log(Level.SEVERE, null, e);
             System.exit(1);
         }
     }
@@ -33,8 +33,8 @@ public class HangManServer {
 
                 ClientHandler handler = new ClientHandler(socket);
                 handler.start();
-            } catch (IOException ex) {
-                Logger.getLogger(HangManServer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException e) {
+                Logger.getLogger(HangManServer.class.getName()).log(Level.SEVERE, null, e);
             }
         }
 
@@ -42,8 +42,8 @@ public class HangManServer {
             if (serverSocket != null) {
                 serverSocket.close();
             }
-        } catch (IOException E) {
-            E.printStackTrace();
+        } catch (IOException e) {
+             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

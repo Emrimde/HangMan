@@ -1,5 +1,6 @@
 package HangManServer;
 
+import HangManClient.HangMan;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
@@ -60,48 +61,40 @@ public class ClientHandler extends Thread {
                         || info.equals("P") || info.equals("Q") || info.equals("R") || info.equals("S") || info.equals("T")
                         || info.equals("U") || info.equals("V") || info.equals("W") || info.equals("X") || info.equals("Y")
                         || info.equals("Z")) {
-                    for (char letter = 'a'; letter <= 'z'; letter++) {
-                        if (info.equals(String.valueOf(Character.toUpperCase(letter)))) {
-                            System.out.println("I get message - " + info + " " + wordOfTheGame);
-                            ArrayList<Integer> positions = new ArrayList<>();
+                    if (Character.isLetter(info.charAt(0))) {
+                        char guessedLetter = Character.toLowerCase(info.charAt(0));
+                        System.out.println("I get message - " + info + " " + wordOfTheGame);
+                        ArrayList<Integer> positions = new ArrayList<>();
 
-                            if (wordOfTheGame.contains(String.valueOf(letter))) {
-                                for (int i = 0; i < wordOfTheGame.length(); i++) {
-                                    if (wordOfTheGame.charAt(i) == letter) {
-                                        positions.add(i);
-                                        numberOfLettersToGuess--;
-                                        out.println("LENGTH" + numberOfLettersToGuess);
-                                    }
+                        if (wordOfTheGame.contains(String.valueOf(guessedLetter))) {
+                            for (int i = 0; i < wordOfTheGame.length(); i++) {
+                                if (wordOfTheGame.charAt(i) == guessedLetter) {
+                                    positions.add(i);
+                                    numberOfLettersToGuess--;
+                                    out.println("LENGTH" + numberOfLettersToGuess);
                                 }
-
-                                out.println("Position" + positions);
-
-                                System.out.println("Ten wyraz zawiera literę " + letter);
-                            } else {
-                                System.out.println("Nie ma litery");
-                                attempts++;
-                                out.println("Wrong" + attempts);
                             }
-
-                            break; // Jeśli litery 'info' została znaleziona, możemy przerwać pętlę.
+                            out.println("POSITION" + positions);
+                            System.out.println("Ten wyraz zawiera literę " + guessedLetter);
+                        } else {
+                            System.out.println("Nie ma litery");
+                            attempts++;
+                            out.println("WRONG" + attempts);
                         }
                     }
                 }
-
             }
             System.out.println("Client leaves");
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+           
+        } catch (IOException e) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
                 in.close();
                 out.close();
                 socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
