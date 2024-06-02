@@ -39,7 +39,7 @@ public class Game extends JFrame implements WindowListener {
         panel1 = new PanelForWord();
 
         createKeyboard();
-        createYellowLines();
+        createYellowLabels();
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
@@ -99,7 +99,7 @@ public class Game extends JFrame implements WindowListener {
         }
     }
 
-    private void createYellowLines() {
+    private void createYellowLabels() {
         int j = 0;
         for (int i = 0; i < 10; i++) {
             JLabel laberForLetter = new JLabel("");
@@ -115,15 +115,12 @@ public class Game extends JFrame implements WindowListener {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
-        Stroke oldStroke = g2D.getStroke();
         g2D.setStroke(new BasicStroke(12));
         g2D.setColor(new Color(133, 82, 12));
         int choice;
-        synchronized (ClientReadThread.class) {
-            choice = ClientReadThread.attempts;
-        }
+        choice = ClientReadThread.attempts;
+        
         switch (choice) {
-            //case 0: System.out.println("Nothing happens"); break;
             case 1:
                 g2D.drawLine(50, 450, 75, 400);
                 break;
@@ -233,9 +230,7 @@ public class Game extends JFrame implements WindowListener {
                 g2D.drawLine(150, 350, 135, 375);
                 showWinMessage(false);
                 break;
-
         }
-        g2D.setStroke(oldStroke);
     }
 
     void showWinMessage(boolean isWon) {
@@ -288,7 +283,8 @@ public class Game extends JFrame implements WindowListener {
 
             outToFile.write(ClientReadThread.word);
             outToFile.newLine();
-            if (isWon) {
+            if (isWon)
+            {
                 outToFile.write("Win");
             } else {
                 outToFile.write("Defeat");

@@ -24,6 +24,7 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 500);
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
     }
 
@@ -85,20 +86,14 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
     public void connectWithServer() {
         try {
             socket = new Socket(address, port);
-        } catch (IOException ex) {
-            Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        ClientReadThread readMessages = new ClientReadThread(socket);
-        readMessages.start();
-
-        try {
+            ClientReadThread readMessages = new ClientReadThread(socket);
+            readMessages.start();
             out = new PrintWriter(socket.getOutputStream(), true);
+            out.println("Connection has begun!");
         } catch (IOException ex) {
+            System.out.println("Connection failed!");
             Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        out.println("Connection has begun!");
     }
 
     @Override
@@ -125,7 +120,7 @@ public class HangMan extends JFrame implements ActionListener, WindowListener {
 
     @Override
     public void windowClosed(WindowEvent e) {
-
+        
     }
 
     @Override

@@ -36,8 +36,8 @@ public class ClientReadThread extends Thread {
                     lengthOfWord = word.length();
                 }
                 
-                if (info.contains("Position")) {
-                    info = info.replace("Position", ""); // Usunięcie słowa "Position"
+                if (info.contains("POSITION")) {
+                    info = info.replace("POSITION", ""); // Usunięcie słowa "Position"
                     info = info.replace("[", "");
                     info = info.replace("]", ",");
                 
@@ -45,9 +45,7 @@ public class ClientReadThread extends Thread {
                     ArrayList<Integer> positions = new ArrayList<>();
 
                     for (String part : parts) {
-                        if (!part.isEmpty()) {
                             positions.add(Integer.parseInt(part.trim()));
-                        }
                     }
 
                     for (int i = 0; i < lengthOfWord; i++) {
@@ -62,13 +60,13 @@ public class ClientReadThread extends Thread {
                     System.out.println("Pozycje: " + positions);
                 }
 
-                if (info.contains("Wrong")) {
-                    info = info.replace("Wrong", "");
+                if (info.contains("WRONG")) {
+                    info = info.replace("WRONG", "");
                     int wrongLetterAttempt = Integer.parseInt(info);
-                    System.out.println("Bad letter - total number of attempts " + wrongLetterAttempt);
-                    synchronized (ClientReadThread.class) {
+                    System.out.println("Bad letter");
+                   
                         attempts = wrongLetterAttempt;
-                    }
+                    
                     // Repaint the Game instance after updating attempts
                     Game.gameInstance.repaint();
                 }
@@ -76,22 +74,22 @@ public class ClientReadThread extends Thread {
                 if (info.contains("LENGTH")) {
                     info = info.replace("LENGTH", "");
                     int lengthToWin = Integer.parseInt(info);
-                    synchronized (ClientReadThread.class) {
-                        numberOfLettersToGuess = lengthToWin;
-                    }
-                    System.out.println("LICZBA LITER DO ODGADNIECIA" + lengthToWin);
+                   
+                    numberOfLettersToGuess = lengthToWin;
+                    
+                    System.out.println("Number of letters to guess" + lengthToWin);
                     if (numberOfLettersToGuess == 0) {
-                        SwingUtilities.invokeLater(() -> Game.gameInstance.showWinMessage(true));
+                       SwingUtilities.invokeLater(() -> Game.gameInstance.showWinMessage(true));
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
                 in.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
